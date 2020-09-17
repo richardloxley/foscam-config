@@ -1,0 +1,442 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Foscam configuration</title>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+
+	<style>
+		#main-frame
+		{
+			height: calc(100vh - 220px);
+			overflow: scroll;
+		}
+
+		#results-frame
+		{
+			height: 200px;
+		}
+
+		#results
+		{
+			width: 65%;
+			height: 200px;
+		}
+
+		#results-key
+		{
+			width: 30%;
+			float: right;
+		}
+
+		.morebox
+		{
+			display: none;
+		}
+
+		ul
+		{
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="main-frame">
+		<h1>
+			Foscam Configuration
+		</h1>
+
+		<hr/>
+
+		<h2>
+			Connection Settings
+		</h2>
+
+		<p>
+		If the camera is set to factory defaults, wait for it to boot up, then hold the "Soft AP" button for about 5 seconds until the LED blinks very fast.
+		Then connect your computer to the webcam's WiFi hotspot (e.g. beginning Foscam, FosBaby, etc).
+		The default settings are IP = 192.168.1.1, port = 88, username = admin, password is blank.
+		<p>
+		If you have configured the camera, then you will need to find the IP address by looking at your router/WiFi access point
+		status page to find which IP address it has given to the camera.
+
+		<form id="camera">
+			<label>
+				IP address of camera:
+				<input type="text" name="ip" value="192.168.1.1">
+			</label>
+			<p>
+			<label>
+				Port:
+				<input type="text" name="port" value="88">
+			</label>
+		</form>
+
+		<form id="credentials">
+			<label>
+				Username:
+				<input type="text" name="username" value="admin">
+			</label>
+			<p>
+			<label>
+				Password:
+				<input type="text" name="password" value="">
+			</label>
+		</form>
+
+		<hr/>
+
+		<h2>
+			Change Username / Password
+		</h2>
+
+		<form id="new-credentials">
+			<label>
+				New username:
+				<input type="text" name="new-username" value="admin">
+			</label>
+			<p>
+			<label>
+				New password:
+				<input type="text" name="new-password" value="">
+			</label>
+			<p>
+			<button type="button" id="save-credentials">Change username and password</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+		</form>
+
+		<hr/>
+
+		<h2>
+			WiFi
+		</h2>
+
+		<form>
+			<button type="button" id="load-wifi">Show existing config</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+			<a class='morelink' href="">
+				<i>(key to results)</i>
+			</a>
+
+			<div class='morebox'>
+				<p>
+				Unless otherwise stated, 0 = no/false, 1 = yes/true
+				<br>
+				Explanations taken from Foscam CGI User Guide.
+				</p>
+
+				<b>&lt;isEnable&gt;</b> Enable state
+				<br>
+				<b>&lt;isUseWifi&gt;</b> Use wifi or not
+				<br>
+				<b>&lt;isConnected&gt;</b> Connected state
+				<br>
+				<b>&lt;connected AP&gt;</b> Connected Access Point
+				<br>
+				<b>&lt;ssid&gt;</b> Access Point name
+				<br>
+				<b>&lt;encryptType&gt;</b>
+				<ul>
+					<li>
+						0 = Open mode
+					</li>
+					<li>
+						1 = WEP
+					</li>
+					<li>
+						2 = WPA
+					</li>
+					<li>
+						3 = WPA2
+					</li>
+					<li>
+						4 = WPA/WPA2
+					</li>
+				</ul>
+				<b>&lt;psk&gt;</b> The PSK (passphrase) for WPA/WPA2
+				<br>
+				<b>&lt;authMode&gt;</b>
+				<ul>
+					<li>
+						0 = Open mode
+					</li>
+					<li>
+						1 = Shared key
+					</li>
+					<li>
+						2 = Auto mode
+					</li>
+				</ul>
+				<b>&lt;keyFormat&gt;</b>
+				<ul>
+					<li>
+						0 = ASCII
+					</li>
+					<li>
+						1 = Hex
+					</li>
+				</ul>
+				<b>&lt;defaultKey&gt;</b> (1-4)
+				<br>
+				<b>&lt;key1&gt;</b>
+				<br>
+				<b>&lt;key2&gt;</b>
+				<br>
+				<b>&lt;key3&gt;</b>
+				<br>
+				<b>&lt;key4&gt;</b>
+				<br>
+				<b>&lt;key1Len&gt;</b> 64 or 128
+				<br>
+				<b>&lt;key2Len&gt;</b> 64 or 128
+				<br>
+				<b>&lt;key3Len&gt;</b> 64 or 128
+				<br>
+				<b>&lt;key4Len&gt;</b> 64 or 128
+			</div>
+		</form>
+
+		<p>
+
+		<form id="save-wifi-form">
+			<label>
+				SSID:
+				<input type="text" name="ssid" value="">
+			</label>
+			<p>
+			<label>
+				Passphrase:
+				<input type="text" name="psk" value="">
+			</label>
+			<p>
+			<label>
+				Encryption type:
+				<select name="encryptType">
+					<option value="0">Open mode</option>
+					<option value="1">WEP</option>
+					<option value="2">WPA</option>
+					<option value="3" selected>WPA2</option>
+					<option value="4">WPA/WPA2</option>
+				</select>
+			</label>
+			<p>
+			<label>
+				Authentication mode:
+				<select name="authMode">
+					<option value="0">Open mode</option>
+					<option value="1">Shared Key</option>
+					<option value="2" selected>Auto</option>
+				</select>
+			</label>
+			<p>
+			<button type="button" id="save-wifi">Save new WiFi settings</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+			<p>
+			<b>After saving, reboot camera to use new settings</b>
+		</form>
+
+		<hr/>
+
+		<h2>
+			On Screen Display
+		</h2>
+
+		<form id="save-osd-form">
+			<button type="button" id="load-osd">Show existing config</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+			<a class='morelink' href="">
+				<i>(key to results)</i>
+			</a>
+
+			<div class='morebox'>
+				<p>
+				Unless otherwise stated, 0 = no/false, 1 = yes/true
+				<br>
+				Explanations taken from Foscam CGI User Guide.
+				</p>
+				<b>&lt;isEnableTimeStamp&gt;</b> Time stamp will display on screen or not
+				<br>
+				<b>&lt;isEnableDevName&gt;</b> Camera name will display on screen or not
+				<br>
+				<b>&lt;dispPos&gt;</b> OSD display position, currently can only be 0
+				<br>
+				<b>&lt;isEnableOSDMask&gt;</b> Is OSD mask effective
+			</div>
+
+			<p>
+			<label>
+				Display timestamp:
+				<select name="isEnableTimeStamp">
+					<option value="1" selected>Yes</option>
+					<option value="0">No</option>
+				</select>
+			</label>
+			<p>
+			<label>
+				Display device name:
+				<select name="isEnableDevName">
+					<option value="1" selected>Yes</option>
+					<option value="0">No</option>
+				</select>
+			</label>
+			<p>
+			<button type="button" id="save-osd">Save new OSD settings</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+		</form>
+
+		<hr/>
+
+		<h2>
+			Camera info
+		</h2>
+
+		<form id="save-name-form">
+			<button type="button" id="load-device">Show device info</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+
+			<p>
+			<label>
+				Camera name:
+				<input type="text" name="devName" value="">
+			</label>
+			<p>
+			<button type="button" id="save-name">Save new camera name</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+		</form>
+
+		<hr/>
+
+		<h2>
+			MJPEG
+		</h2>
+
+		<form id="save-mjpeg-form">
+			HD (H264) cameras can be set to show SD MJPEG instead on their secondary (sub) stream,
+			which can be useful for software that requires MJPEG. However the 16:9 picture is squashed
+			to fit into the 4:3 MJPEG stream.
+			<p>
+			<label>
+				Substream format:
+				<select name="format">
+					<option value="0" selected>H264</option>
+					<option value="1">Motion JPEG</option>
+				</select>
+			</label>
+			<p>
+			<button type="button" id="save-mjpeg">Save new substream format</button>
+			<i>results from the webcam will appear in the box at the bottom</i>
+			<p>
+			<button type="button" id="show-mjpeg">View MJPEG video in a new window</button>
+		</form>
+	</div>
+
+	<div id="results-frame">
+		<iframe id="results">
+		</iframe>
+		<div id="results-key">
+			<b>&lt;result&gt;</b>
+			<br>
+			0 = Success
+			<br>
+			-1 = CGI request string format error
+			<br>
+			-2 = Username or password error
+			<br>
+			-3 = Access deny
+			<br>
+			-4 = CGI execute fail
+			<br>
+			-5 = Timeout
+			<br>
+			-6 = Reserve
+			<br>
+			-7 = Unknown error
+			<br>
+			-8 = Reserve
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		$(document).ready(function()
+		{
+			$('a.morelink').click(function()
+			{
+				$(this).next(".morebox").toggle();
+				return false;
+			});
+		});
+
+		function makeCommandUrl(command)
+		{
+			return "http://" + $('[name="ip"]').val() + ":" + $('[name="port"]').val() + "/cgi-bin/CGIProxy.fcgi?cmd=" + command + "&usr=" + $('[name="username"]').val() + "&pwd=" + $('[name="password"]').val();
+		}
+
+		$("#save-credentials").click(function()
+		{
+			commandUrl = makeCommandUrl("changeUserNameAndPwdTogether");
+			commandUrl += "&usrName=" + $('[name="username"]').val() + "&oldPwd=" + $('[name="password"]').val();
+			commandUrl += "&newUsrName=" + $('[name="new-username"]').val() + "&newPwd=" + $('[name="new-password"]').val();
+			$("#results").attr("src", commandUrl);
+			$('[name="username"]').val($('[name="new-username"]').val());
+			$('[name="password"]').val($('[name="new-password"]').val());
+		});
+
+		$("#load-wifi").click(function()
+		{
+			commandUrl = makeCommandUrl("getWifiConfig");
+			$("#results").attr("src", commandUrl);
+		});
+
+		$("#save-wifi").click(function()
+		{
+			commandUrl = makeCommandUrl("setWifiSetting");
+			commandUrl += "&isEnable=1&isUseWifi=1&netType=0&keyFormat=0&defaultKey=1&key1=&key2=&key3=&key4=&key1Len=64&key2Len=64&key3Len=64&key4Len=64";
+			commandUrl += "&" + $("#save-wifi-form").serialize();
+			$("#results").attr("src", commandUrl);
+		});
+
+		$("#load-osd").click(function()
+		{
+			commandUrl = makeCommandUrl("getOSDSetting");
+			$("#results").attr("src", commandUrl);
+		});
+
+		$("#save-osd").click(function()
+		{
+			commandUrl = makeCommandUrl("setOSDSetting");
+			commandUrl += "&" + $("#save-osd-form").serialize();
+			commandUrl += "&dispPos=0&isEnableOSDMask=0";
+			$("#results").attr("src", commandUrl);
+		});
+
+		$("#load-device").click(function()
+		{
+			commandUrl = makeCommandUrl("getDevInfo");
+			$("#results").attr("src", commandUrl);
+		});
+
+		$("#save-name").click(function()
+		{
+			commandUrl = makeCommandUrl("setDevName");
+			commandUrl += "&" + $("#save-name-form").serialize();
+			$("#results").attr("src", commandUrl);
+		});
+
+		$("#save-mjpeg").click(function()
+		{
+			commandUrl = makeCommandUrl("setSubStreamFormat");
+			commandUrl += "&" + $("#save-mjpeg-form").serialize();
+			$("#results").attr("src", commandUrl);
+		});
+
+		$("#show-mjpeg").click(function()
+		{
+			streamUrl =  "http://" + $('[name="ip"]').val() + ":" + $('[name="port"]').val() + "/cgi-bin/CGIStream.cgi?cmd=GetMJStream" + "&usr=" + $('[name="username"]').val() + "&pwd=" + $('[name="password"]').val();
+			window.open(streamUrl, "_blank");
+		});
+	</script>
+</body>
+</html>
