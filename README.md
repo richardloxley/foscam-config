@@ -8,3 +8,11 @@ This simple HTML page allows you to configure the basics on such a Foscam camera
 Installation: download the HTML file.  Open it in a web browser :-)
 
 I have added all the basic features I needed.  Others could be added quite easily by referring to the code and the "Foscam IPCamera CGI User Guide" to see which APIs you need.
+
+# Screenshots
+
+![Connections and credentials](https://raw.githubusercontent.com/richardloxley/foscam-config/master/foscam-config-example1.png)
+
+![WiFi](https://raw.githubusercontent.com/richardloxley/foscam-config/master/foscam-config-example2.png)
+
+![Device configuration](https://raw.githubusercontent.com/richardloxley/foscam-config/master/foscam-config-example3.png)
